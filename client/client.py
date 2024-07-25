@@ -12,6 +12,8 @@ data = file.read(1024)
 
 obj_socket = socket(AF_INET, SOCK_STREAM)
 
+obj_socket.connect((server, port))
+
 while data:
     print("Enviando arquivo...")
     obj_socket.sendall(data)
