@@ -1,40 +1,35 @@
 from socket import *
 import os
+import time
 
 # Address and port
 server = "127.0.0.1"
 port = 43210
-transfer_size = 1024
+TRANSFER_SIZE = 1024
 size_status = 0
 
 filename = input("Digite o nome do arquivo: ")
+print("Nome arquivo: ", filename)
 file_size = os.path.getsize(filename)
-
-file = open(filename, "rb")
 
 obj_socket = socket(AF_INET, SOCK_STREAM)
 
 # Conecta ao host
 obj_socket.connect((server, port))
 
-while True:
-    try:
-        data = file.read(transfer_size) 
-        while data:
-            print("Enviando arquivo...")
-            obj_socket.sendall(data)
-            data = file.read(transfer_size)
-            size_status += transfer_size
-            print(f"Enviando {size_status}/{file_size}")
-        file.close()
-        break
-    except:
-        print("Erro ao enviar o arquivo!!!")
-
-obj_socket.send(b"Enviado...")
+with open(filename, "rb") as file:
+    while True:
+        obj_socket.sendall(filename.encode())
+        time.sleep(2)
+        data = file.read()
+        print(f"Enviando arquivo {filename}")
+        obj_socket.sendall(data)
+        if not data:
+            print('Saindo do envio')
+            break
 
 print("ARQUIVO ENVIADO")
-print(obj_socket.recv(transfer_size))
+#print(obj_socket.recv(TRANSFER_SIZE))
 
 obj_socket.shutdown(2)
 

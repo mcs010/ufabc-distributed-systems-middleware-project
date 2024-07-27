@@ -12,24 +12,26 @@ obj_socket = socket(AF_INET, SOCK_STREAM)
 obj_socket.bind((client_address, port))
 obj_socket.listen(2) # Qtd max de clientes que a aplicação irá escutar/receber conexão
 
+print("Servidor iniciado!!!")
 print("Aguardando cliente...")
 
 conn, client = obj_socket.accept()
 print("Conectado com: ", client)
 
+# Armazenando arquivo no servidor
+filename = conn.recv(TRANSFER_SIZE).decode()
+print("Nome arquivo: ", filename)
+
 # Recebendo arquivo
 data = conn.recv(TRANSFER_SIZE).decode()
 
-# Armazenando arquivo no servidor
-filename = os.path.basename(data)
-
-# Passar arquivo pro servidor
+# Cria arquivo no servidor recebendo o nome do arquivo pelo 'filename'
 open_file = open(filename, 'w')
 
 print("Recebendo arquivo")
 while data:
     open_file.write(data)
-    data = conn.recv(TRANSFER_SIZE).decode()
+    #data = conn.recv(TRANSFER_SIZE).decode()
 
     if not data:
         break
