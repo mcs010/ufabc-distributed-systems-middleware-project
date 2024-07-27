@@ -1,7 +1,7 @@
 from socket import *
 import os
 import time
-
+#
 # Address and port
 server = "127.0.0.1"
 port = 43210
