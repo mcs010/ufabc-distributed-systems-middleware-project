@@ -1,37 +1,34 @@
 from socket import *
 import os
 import time
-#
+
 # Address and port
-server = "127.0.0.1"
-port = 43210
+IP_ADDRESS = "127.0.0.1"
+PORT = 43210
 TRANSFER_SIZE = 1024
-size_status = 0
+FILENAME = input("Digite o nome do arquivo: ")
+print("Nome arquivo: ", FILENAME)
 
-filename = input("Digite o nome do arquivo: ")
-print("Nome arquivo: ", filename)
-file_size = os.path.getsize(filename)
+# Criando socket TCP
+client_socket = socket(AF_INET, SOCK_STREAM)
 
-obj_socket = socket(AF_INET, SOCK_STREAM)
+# Conectando ao servidor
+client_socket.connect((IP_ADDRESS, PORT))
 
-# Conecta ao host
-obj_socket.connect((server, port))
+# Acessando arquivo
+file = open(FILENAME, "r")
 
-with open(filename, "rb") as file:
-    while True:
-        obj_socket.sendall(filename.encode())
-        time.sleep(2)
-        data = file.read()
-        print(f"Enviando arquivo {filename}")
-        obj_socket.sendall(data)
-        if not data:
-            print('Saindo do envio')
-            break
+# Armazenando dados do arquivo
+data = file.read()
 
-print("ARQUIVO ENVIADO")
-#print(obj_socket.recv(TRANSFER_SIZE))
+# Enviando nome do arquivo ao servidor
+print("Enviando nome do arquivo....")
+client_socket.send(FILENAME.encode('utf-8'))
 
-obj_socket.shutdown(2)
+# Enviando arquivo ao servidor
+print("Enviando arquivo....")
+client_socket.sendall(data.encode())
 
-# Fechar conexão
-obj_socket.close()
+file.close()
+
+client_socket.close()
