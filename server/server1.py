@@ -3,7 +3,7 @@ import os
 
 # Address and port
 IP_ADDRESS = "127.0.0.1"
-PORT = 43210
+PORT = 43211
 BUFFER_SIZE = 1024
 
 # Iniciando socket TCP
