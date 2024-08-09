@@ -34,8 +34,6 @@ if ".txt" in FILENAME:
 
     print("Arquivo enviado...")
 
-    #client_socket.send(bytes("<>", "utf-8"))
-
     file.close()
 
 elif ".png" in FILENAME:
@@ -46,7 +44,9 @@ elif ".png" in FILENAME:
 
         # Enviando nome do arquivo ao servidor
         print("Enviando nome do arquivo....")
-        client_socket.send(FILENAME.encode('utf-8'))
+        client_socket.send(FILENAME.encode())
+
+        time.sleep(3)
 
         while data:
             # Enviando arquivo ao servidor
@@ -55,7 +55,5 @@ elif ".png" in FILENAME:
             data = file.read(BUFFER_SIZE)
 
     print("Arquivo enviado...")
-
-    client_socket.send(bytes("<>", "utf-8"))
 
 client_socket.close()
