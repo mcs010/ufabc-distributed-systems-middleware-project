@@ -15,28 +15,40 @@ server_socket.bind((IP_ADDRESS, PORT))
 server_socket.listen()
 print("Servidor aguardando conexao....")
 
+# Servidor aceita conexao do client
+conn, addr = server_socket.accept()
+print(f"Conectado ao client {conn}/{addr}")
+
+# Recebendo nome do arquivo
+filename = conn.recv(BUFFER_SIZE).decode()
+print(f"Recebendo nome do arquivo: {filename}")
+# file = open(filename, "wb")
+# print(f"Nome do arquivo recebido")
+
+# Recebendo dados do arquivo
+process_finished = False
+
+file_bytes = b""
+
 while True:
-    # Servidor aceita conexao do client
-    conn, addr = server_socket.accept()
-    print(f"Conectado ao client {conn}/{addr}")
+    file_data = conn.recv(BUFFER_SIZE)
 
-    # Recebendo nome do arquivo
-    filename = conn.recv(BUFFER_SIZE).decode('utf-8')
-    print(f"Recebendo nome do arquivo: {filename}")
+    if not file_data:
+        break
     
-    if ".txt" in filename:
-        file = open(filename, "w")
-        print(f"Nome do arquivo recebido")
+    file_bytes += file_data
 
+with open(filename, "wb") as file:
+    file.write(file_bytes)
+
+"""
+while True:
+    if ".txt" in filename:
         # Recebendo dados do arquivo do client
         print("Recebendo dados do arquivo....")
         data = conn.recv(BUFFER_SIZE).decode()
         file.write(data)
         print("Arquivo recebido")
-
-        file.close()
-
-        conn.close()
 
     elif ".png" in filename:
         with open(filename, "wb") as file:
@@ -47,3 +59,5 @@ while True:
                 received_data = conn.recv(BUFFER_SIZE)
 
             print("Arquivo recebido......")
+
+"""
