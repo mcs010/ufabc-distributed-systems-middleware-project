@@ -6,7 +6,7 @@ import time
 IP_ADDRESS = "127.0.0.1"
 PORT = 43210
 PORT_2 = 43211
-BUFFER_SIZE = 1024
+BUFFER_SIZE = 4096
 #FILENAME_BUFFER = get_filename_buffer()
 
 def connect_to_client(IP_ADDRESS, PORT):
@@ -39,8 +39,6 @@ def receive_from_client(IP_ADDRESS, PORT):
 
     filename = conn.recv(BUFFER_SIZE).decode()
     print(f"Nome recebido: {filename}")
-
-    #process_finished = False
 
     file_bytes = b""
 

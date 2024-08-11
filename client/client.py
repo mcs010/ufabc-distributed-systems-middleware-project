@@ -29,7 +29,7 @@ if ".txt" or ".pdf" in FILENAME:
     time.sleep(3)
 
     # Enviando arquivo ao servidor
-    print(f"Enviando arquivo.... {data}")
+    print(f"Enviando arquivo....")
     client_socket.sendall(data)
 
     print("Arquivo enviado...")
