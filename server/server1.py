@@ -21,9 +21,7 @@ print(f"Conectado ao client {conn}/{addr}")
 
 # Recebendo nome do arquivo
 filename = conn.recv(BUFFER_SIZE).decode()
-print(f"Recebendo nome do arquivo: {filename}")
-# file = open(filename, "wb")
-# print(f"Nome do arquivo recebido")
+print(f"Recebendo nome do arquivo: {filename}...")
 
 # Recebendo dados do arquivo
 process_finished = False
@@ -41,23 +39,6 @@ while True:
 with open(filename, "wb") as file:
     file.write(file_bytes)
 
-"""
-while True:
-    if ".txt" in filename:
-        # Recebendo dados do arquivo do client
-        print("Recebendo dados do arquivo....")
-        data = conn.recv(BUFFER_SIZE).decode()
-        file.write(data)
-        print("Arquivo recebido")
+print(f"Arquivo {filename} recebido")
 
-    elif ".png" in filename:
-        with open(filename, "wb") as file:
-            received_data = conn.recv(BUFFER_SIZE)
-
-            while data:
-                file.write(received_data)
-                received_data = conn.recv(BUFFER_SIZE)
-
-            print("Arquivo recebido......")
-
-"""
+server_socket.close()

@@ -54,41 +54,6 @@ def receive_from_client(IP_ADDRESS, PORT):
 
     return filename, file_bytes
 
-    # # Recebendo nome do arquivo
-    # filename = conn.recv(BUFFER_SIZE).decode('utf-8')
-    # print(f"Recebendo nome do arquivo: {filename}")
-
-    # # Recebendo tamanho (bytes) do nome do arquivo
-    # filesize = conn.recv(BUFFER_SIZE).decode()
-    # print(f"Recebendo tamanho do arquivo: {filesize}")
-
-    # while True:
-    #     if ".txt" in filename:
-    #         print(f"Nome e tamanho do arquivo recebido")
-
-    #         # Recebendo dados do arquivo do client
-    #         print("Recebendo dados do arquivo....")
-    #         data = conn.recv(BUFFER_SIZE).decode()
-    #         #file.write(data)
-    #         print("Arquivo recebido")
-
-    #         #file.close()
-
-    #         return filename, data
-
-    #     elif ".png" in filename:
-    #         received_data = conn.recv(BUFFER_SIZE)
-
-    #         while received_data:
-    #             received_data = conn.recv(BUFFER_SIZE)
-
-    #         print("Arquivo recebido......")
-
-    #         return filename, data
-        
-    #     conn.close()
-
-
 def connect_to_server(IP_ADDRESS, PORT_2):
     """
     Funçao para conectar middleware ao servidor
@@ -116,50 +81,15 @@ def send_to_server(IP_ADDRESS, PORT_2, filename, file_data):
     time.sleep(3)
 
     # Enviando arquivo ao servidor
-    print(f"Enviando arquivo.... {file_data}")
+    print(f"Enviando arquivo....")
     socket.sendall(file_data)
 
     print("Arquivo enviado...")
 
     socket.close()
 
-"""
-    # Acessando arquivo
-    if ".txt" in filename:
-
-        # Armazenando dados do arquivo
-        data = file_data
-
-        # Enviando nome do arquivo ao servidor
-        print(f"Enviando nome do arquivo.... {filename}")
-        socket.send(filename.encode())
-
-        # Enviando arquivo ao servidor
-        print(f"Enviando arquivo.... {data}")
-        socket.sendall(data)
-
-    elif ".png" in filename:
-            # Armazenando dados do arquivo
-            data = file_data.read(BUFFER_SIZE)
-
-            # Enviando nome do arquivo ao servidor
-            print("Enviando nome do arquivo....")
-            socket.send(filename.encode('utf-8'))
-
-            while data:
-                # Enviando arquivo ao servidor
-                print("Enviando arquivo....")
-                socket.send(data)
-                data = file_data.read(BUFFER_SIZE)
-
-    socket.close()
-"""
-
-
 if __name__ == '__main__':
 
     filename, file_data = receive_from_client(IP_ADDRESS, PORT)
-
-    print(f"post func {filename}")
 
     send_to_server(IP_ADDRESS, PORT_2, filename, file_data)

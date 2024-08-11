@@ -16,7 +16,7 @@ client_socket = socket(AF_INET, SOCK_STREAM)
 client_socket.connect((IP_ADDRESS, PORT))
 
 # Acessando arquivo
-if ".txt" in FILENAME:
+if ".txt" or ".pdf" in FILENAME:
     file = open(FILENAME, "rb")
 
     # Armazenando dados do arquivo
@@ -36,7 +36,7 @@ if ".txt" in FILENAME:
 
     file.close()
 
-elif ".png" in FILENAME:
+elif ".png" or ".jpeg" or ".jpg" in FILENAME:
     with open(FILENAME, "rb") as file:
 
         # Armazenando dados do arquivo
