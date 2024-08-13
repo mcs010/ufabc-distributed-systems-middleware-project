@@ -17,7 +17,7 @@ def client_menu():
 def sending_file():
     # Address and port
     IP_ADDRESS = "127.0.0.1"
-    PORT = 43210
+    PORT = 43215
     BUFFER_SIZE = 1024
     FILENAME = input("Digite o nome do arquivo: ")
     FILESIZE = os.path.getsize(FILENAME)
