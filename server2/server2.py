@@ -48,14 +48,6 @@ def backup(filename):
     # Criando socket TCP
     sock = socket(AF_INET, SOCK_STREAM)
 
-    # Conectando ao servidordef backup(filename):
-    """
-    Função para execução do backup do arquivo em outro server
-    """
-
-    # Criando socket TCP
-    sock = socket(AF_INET, SOCK_STREAM)
-
     # Conectando ao servidor
     sock.connect((IP_ADDRESS, BACKUP_PORT))
 
@@ -70,6 +62,8 @@ def backup(filename):
         # Enviando flag ao servidor
         print(f"Enviando flag ao servidor.... {flag}")
         sock.sendall(str(flag).encode())
+
+        time.sleep(2)
 
         # Enviando nome do arquivo ao servidor
         print(f"Enviando nome do arquivo.... {filename}")
@@ -96,60 +90,7 @@ def backup(filename):
             print(f"Enviando flag ao servidor.... {flag}")
             sock.sendall(str(flag).encode())
 
-            # Enviando nome do arquivo ao servidor
-            print("Enviando nome do arquivo....")
-            sock.send(filename.encode())
-
-            time.sleep(3)
-
-            while data:
-                # Enviando arquivo ao servidor
-                print("Enviando arquivo....")
-                sock.send(data)
-                data = file.read(BUFFER_SIZE)
-
-        print("Arquivo enviado...")
-
-    sock.close()
-    
-    sock.connect((IP_ADDRESS, PORT))
-
-    # Acessando arquivo
-    if ".txt" or ".pdf" in filename:
-        file = open(filename, "rb")
-
-        # Armazenando dados do arquivo
-        data = file.read()
-
-        flag = 2
-        # Enviando flag ao servidor
-        print(f"Enviando flag ao servidor.... {flag}")
-        socket.sendall(str(flag).encode())
-
-        # Enviando nome do arquivo ao servidor
-        print(f"Enviando nome do arquivo.... {filename}")
-        sock.sendall(filename.encode())
-
-        time.sleep(3)
-
-        # Enviando arquivo ao servidor
-        print(f"Enviando arquivo....")
-        sock.sendall(data)
-
-        print("Arquivo enviado...")
-
-        file.close()
-
-    elif ".png" or ".jpeg" or ".jpg" in filename:
-        with open(filename, "rb") as file:
-
-            # Armazenando dados do arquivo
-            data = file.read(BUFFER_SIZE)
-
-            flag = 2
-            # Enviando flag ao servidor
-            print(f"Enviando flag ao servidor.... {flag}")
-            socket.sendall(str(flag).encode())
+            time.sleep(2)
 
             # Enviando nome do arquivo ao servidor
             print("Enviando nome do arquivo....")
