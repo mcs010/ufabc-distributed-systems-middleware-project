@@ -11,7 +11,6 @@ MIDDLEWARE_PORT_2 = 43215
 PORT_2 = 43211
 PORT_3 = 43212
 BUFFER_SIZE = 4096
-#FILENAME_BUFFER = get_filename_buffer()
 
 def connect_to_client(IP_ADDRESS, PORT):
     """
@@ -76,6 +75,13 @@ def send_to_server(IP_ADDRESS, PORT, filename, file_data):
 
     socket = connect_to_server(IP_ADDRESS, PORT)
 
+    flag = 1
+    # Enviando flag ao servidor
+    print(f"Enviando flag ao servidor.... {flag}")
+    socket.sendall(str(flag).encode())
+
+    time.sleep(2)
+
     # Enviando nome do arquivo ao servidor
     print(f"Enviando nome do arquivo.... {filename}")
     socket.sendall(filename.encode())
@@ -100,10 +106,6 @@ def get_server_storage_of_files(connection):
 
     return server_response
 
-def get_less_loaded_server(result_list):
-
-    return sorted(result_list, key=lambda tup: tup[1])
-
 if __name__ == '__main__':
 
     # Iniciando socket TCP
@@ -118,7 +120,7 @@ if __name__ == '__main__':
     print("Middleware aguardando conexao....")
 
     chosen_server = []
-    for i in range(3):
+    for i in range(2):
         conn, address = middleware_socket.accept()
 
         with concurrent.futures.ThreadPoolExecutor(2) as executor:
